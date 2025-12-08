@@ -15,6 +15,7 @@ function chatMessages(props: chatMessagesProps) {
                     key={index}
                     role={msg.sender === "User" ? "user" : "assistant"}
                     content={msg.text}
+                    images={msg.images}
                 />
             ))}
         </div>

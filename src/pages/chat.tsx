@@ -2,7 +2,7 @@ import {useCallback, useContext, useState} from "react";
 import ChatInput from "../components/chat/ChatInput.tsx";
 import ChatMessages from "../components/chat/ChatMessages.tsx";
 import ChatHeader from "../components/chat/ChatHeader.tsx";
-import {generateTextWithAzure as generateText} from "../lib/utils/ai-sdk.ts";
+import {generateTextWithAzure as generateText, generateMultimodalWithAzure} from "../lib/utils/ai-sdk.ts";
 import type {LLMMessage} from "../types/LLMMessage.ts";
 import ErrorPrompt from "../components/chat/ErrorPrompt.tsx";
 import {Sheet, SheetTrigger} from "../components/ui/sheet.tsx";
@@ -17,16 +17,18 @@ function Chat() {
     const {errors, addError} = useContext(ErrorContext)
     const {mcpEndpoint} = useContext(McpContext)
 
-    const handleSend = useCallback(async (input: string) => {
+    const handleSend = useCallback(async (input: string, images?: string[]) => {
         if (!input.trim()) return;
 
         // Add the user's message to the chat
-        const userMessage: LLMMessage = {sender: "User", text: input};
+        const userMessage: LLMMessage = {sender: "User", text: input, images: images && images.length ? images : undefined};
         setMessages((prev) => [...prev, userMessage]);
 
         try {
-            console.log("Calling generateText With AI...");
-            const aiResponse = await generateText({prompt: input, handleError: addError, mcpEndpoint});
+            console.log("Calling AI generate...", images?.length ? "multimodal" : "text");
+            const aiResponse = images && images.length
+                ? await generateMultimodalWithAzure({ text: input, images, handleError: addError, mcpEndpoint })
+                : await generateText({prompt: input, handleError: addError, mcpEndpoint});
             console.log("AI Response received:", aiResponse);
             const botMessage: LLMMessage = {sender: "AI", text: aiResponse};
             setMessages((prev) => [...prev, botMessage]);
