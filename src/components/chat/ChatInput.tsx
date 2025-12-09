@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from "react";
-import {Send, Mic, ImagePlus, StopCircle} from "lucide-react";
-import { Button } from "../ui/button.tsx";
+import {Send, Mic, ImagePlus, StopCircle, Settings} from "lucide-react";
+import {Button} from "../ui/button.tsx";
+import {WebviewWindow} from '@tauri-apps/api/webviewWindow';
 
 interface chatInputProps {
     onSend: (input: string, images?: string[]) => void;
@@ -114,6 +115,32 @@ function ChatInput(props: chatInputProps) {
         }
     }, [isRecording]);
 
+    const openSettingsWindow = useCallback(async () => {
+        try {
+            // Check if settings window already exists
+
+            // Create a new settings window
+            const newWindow = new WebviewWindow('settings', {
+                url: '/settings',
+                width: 700,
+                height: 600,
+                decorations: false,
+                focus: true,
+                resizable: true,
+            });
+
+            newWindow.once('tauri://created', function () {
+                console.log('Settings window created');
+            });
+            newWindow.once('tauri://error', function (e) {
+                console.error('Settings window error:', e);
+            });
+
+        } catch (error) {
+            console.error('Failed to open settings window:', error);
+        }
+    }, []);
+
     return (
         <>
             <div
@@ -138,11 +165,16 @@ function ChatInput(props: chatInputProps) {
                     onChange={(e) => onFilesSelected(e.target.files)}
                 />
                 <div className="flex items-center gap-1">
-                    <Button variant="ghost" size="icon" onClick={() => fileInputRef.current?.click()} title="Attach image(s)">
-                        <ImagePlus className="w-5 h-5" />
+                    <Button variant="ghost" size="icon" onClick={openSettingsWindow} title="Settings">
+                        <Settings className="w-5 h-5"/>
                     </Button>
-                    <Button variant={isRecording ? "destructive" : "ghost"} size="icon" onClick={startStopRecording} title={isRecording ? "Stop recording" : "Speak"}>
-                        {isRecording ? <StopCircle className="w-5 h-5"/> : <Mic className="w-5 h-5" />}
+                    <Button variant="ghost" size="icon" onClick={() => fileInputRef.current?.click()}
+                            title="Attach image(s)">
+                        <ImagePlus className="w-5 h-5"/>
+                    </Button>
+                    <Button variant={isRecording ? "destructive" : "ghost"} size="icon" onClick={startStopRecording}
+                            title={isRecording ? "Stop recording" : "Speak"}>
+                        {isRecording ? <StopCircle className="w-5 h-5"/> : <Mic className="w-5 h-5"/>}
                     </Button>
                     <Button onClick={handleSend} size="icon" title="Send">
                         <Send className="w-5 h-5"/>
@@ -154,7 +186,7 @@ function ChatInput(props: chatInputProps) {
                 <div className="flex gap-2 mt-2 flex-wrap">
                     {attachedImages.map((src, i) => (
                         <div key={i} className="relative">
-                            <img src={src} alt={`attachment-${i}`} className="w-16 h-16 object-cover rounded border" />
+                            <img src={src} alt={`attachment-${i}`} className="w-16 h-16 object-cover rounded border"/>
                         </div>
                     ))}
                 </div>
