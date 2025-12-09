@@ -1,7 +1,9 @@
+// TODO refactor and split into separate components
+
 import React, {useCallback, useEffect, useRef, useState} from "react";
-import {Send, Mic, ImagePlus, StopCircle, Settings} from "lucide-react";
+import {Send, Mic, ImagePlus, StopCircle} from "lucide-react";
 import {Button} from "../ui/button.tsx";
-import {WebviewWindow} from '@tauri-apps/api/webviewWindow';
+import SettingsButton from "./chatInput/SettingsButton.tsx";
 
 interface chatInputProps {
     onSend: (input: string, images?: string[]) => void;
@@ -115,32 +117,6 @@ function ChatInput(props: chatInputProps) {
         }
     }, [isRecording]);
 
-    const openSettingsWindow = useCallback(async () => {
-        try {
-            // Check if settings window already exists
-
-            // Create a new settings window
-            const newWindow = new WebviewWindow('settings', {
-                url: '/settings',
-                width: 700,
-                height: 600,
-                decorations: false,
-                focus: true,
-                resizable: true,
-            });
-
-            newWindow.once('tauri://created', function () {
-                console.log('Settings window created');
-            });
-            newWindow.once('tauri://error', function (e) {
-                console.error('Settings window error:', e);
-            });
-
-        } catch (error) {
-            console.error('Failed to open settings window:', error);
-        }
-    }, []);
-
     return (
         <>
             <div
@@ -165,9 +141,7 @@ function ChatInput(props: chatInputProps) {
                     onChange={(e) => onFilesSelected(e.target.files)}
                 />
                 <div className="flex items-center gap-1">
-                    <Button variant="ghost" size="icon" onClick={openSettingsWindow} title="Settings">
-                        <Settings className="w-5 h-5"/>
-                    </Button>
+                    <SettingsButton/>
                     <Button variant="ghost" size="icon" onClick={() => fileInputRef.current?.click()}
                             title="Attach image(s)">
                         <ImagePlus className="w-5 h-5"/>

@@ -12,26 +12,6 @@ fn get_ai_response(message: String) -> String {
     format!("AI response: {}", message)
 }
 
-// #[tauri::command]
-// fn toggle_window(window: tauri::Window) {
-//     if let Ok(main_window) = window.get_webview_window("main") {
-//         match main_window.is_visible() {
-//             Ok(is_visible) => {
-//                 if is_visible {
-//                     let _ = main_window.hide();
-//                 } else {
-//                     let _ = main_window.show();
-//                     let _ = main_window.set_focus();
-//                 }
-//             }
-//             Err(_) => {
-//                 let _ = main_window.show();
-//                 let _ = main_window.set_focus();
-//             }
-//         }
-//     }
-// }
-
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()

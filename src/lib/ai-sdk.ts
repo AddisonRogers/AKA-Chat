@@ -1,7 +1,5 @@
 import {generateText, type ToolSet} from "ai";
 import {createOllama} from "ai-sdk-ollama";
-import {useContext} from "react";
-import {LLMSettingsContext} from "../contexts/llmContext.tsx";
 
 export type GenerateTextWithAzureOptions = {
     prompt: string;
@@ -22,7 +20,6 @@ export type GenerateTextWithAzureOptions = {
  */
 export async function generateTextWithAzure(props: GenerateTextWithAzureOptions): Promise<string> {
     const {prompt, handleError, mcpEndpoint} = props;
-    const llmContext = useContext(LLMSettingsContext)
 
     const ollama = createOllama({
     });
@@ -65,7 +62,6 @@ export async function generateTextWithAzure(props: GenerateTextWithAzureOptions)
             tools,
             prompt,
         });
-        console.log("Azure AI Response:", text); // Log the response
 
         if (mcpAvailable && mcpClient) {
             mcpClient.close();

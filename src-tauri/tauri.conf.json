@@ -13,8 +13,8 @@
     "windows": [
       {
         "title": "aka-ai",
-        "width": 800,
-        "height": 600,
+        "width": 500,
+        "height": 180,
         "visible": true,
         "skipTaskbar": true,
         "decorations": false
