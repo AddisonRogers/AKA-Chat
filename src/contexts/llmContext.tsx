@@ -1,11 +1,15 @@
 import {createContext} from "react";
-import {LLMProvider, LLMSettings} from "../providers/llmProvider.tsx";
+import {DEFAULT_SETTINGS, LLMSettingsContextType} from "../types/LLMSettingsTypes.ts";
 
-export type LLMSettingsContextType = {
-    settings: LLMSettings;
-    updateSettings: (settings: LLMSettings) => void;
-    updateProvider: (provider: LLMProvider) => void;
-    updateModel: (model: string) => void;
-}
-
-export const LLMSettingsContext = createContext<LLMSettingsContextType | undefined>(undefined);
+export const LLMSettingsContext = createContext<LLMSettingsContextType>({
+    settings: DEFAULT_SETTINGS,
+    updateSettings: () => {},
+    updateProvider: () => {},
+    updateModel: () => {},
+    updateApiKey: () => {},
+    updateTemperature: () => {},
+    updateMaxTokens: () => {},
+    updateTopP: () => {},
+    updateFrequencyPenalty: () => {},
+    saveSettings: () => {}
+});

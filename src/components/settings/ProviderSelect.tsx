@@ -1,17 +1,13 @@
-import React from 'react';
-import {LLMProvider} from '../../providers/llmProvider.tsx';
-import {LLM_PROVIDERS} from '../lib/llmConfig';
+import {useContext, useMemo} from 'react';
 import {Label} from '../ui/label';
+import {LLMSettingsContext} from "../../contexts/llmContext.tsx";
+import {LLM_PROVIDERS, LLMProvider} from "../../types/LLMSettingsTypes.ts";
 
-interface ProviderSelectProps {
-    selectedProvider: LLMProvider;
-    onProviderChange: (provider: LLMProvider) => void;
-}
-
-export function ProviderSelect({selectedProvider, onProviderChange}: ProviderSelectProps) {
-    const providers = React.useMemo(
+export function ProviderSelect() {
+    const llmContext = useContext(LLMSettingsContext)
+    const providers = useMemo(
         () => Object.entries(LLM_PROVIDERS) as Array<[LLMProvider, typeof LLM_PROVIDERS[LLMProvider]]>,
-        []
+        [llmContext?.settings.provider]
     );
 
     return (
@@ -21,9 +17,9 @@ export function ProviderSelect({selectedProvider, onProviderChange}: ProviderSel
                 {providers.map(([key, config]) => (
                     <button
                         key={key}
-                        onClick={() => onProviderChange(key)}
+                        onClick={() => llmContext?.updateProvider(key)}
                         className={`p-4 rounded-lg border-2 text-left transition-all ${
-                            selectedProvider === key
+                            llmContext?.settings.provider === key
                                 ? 'border-blue-500 bg-blue-50 dark:bg-blue-950'
                                 : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'
                         }`}

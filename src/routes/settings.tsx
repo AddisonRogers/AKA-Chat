@@ -1,15 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useLLMSettings } from '../contexts/llmSettingsContext';
 import { ProviderSelect } from '../components/settings/ProviderSelect';
 import { ModelSelect } from '../components/settings/ModelSelect';
 import { SettingsCard } from '../components/settings/SettingsCard';
+import {useContext} from "react";
+import {LLMSettingsContext} from "../contexts/llmContext.tsx";
 
 export const Route = createFileRoute('/settings')({
     component: Settings,
 });
 
 function Settings() {
-    const { settings, updateProvider, updateModel } = useLLMSettings();
+    const {settings} = useContext(LLMSettingsContext);
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
@@ -24,21 +25,14 @@ function Settings() {
                         title="Provider Selection"
                         description="Choose which LLM provider you want to use"
                     >
-                        <ProviderSelect
-                            selectedProvider={settings.provider}
-                            onProviderChange={updateProvider}
-                        />
+                        <ProviderSelect/>
                     </SettingsCard>
 
                     <SettingsCard
                         title="Model Selection"
                         description="Select the model for the chosen provider"
                     >
-                        <ModelSelect
-                            selectedProvider={settings.provider}
-                            selectedModel={settings.model}
-                            onModelChange={updateModel}
-                        />
+                        <ModelSelect/>
                     </SettingsCard>
 
                     <div className="mt-8 p-4 rounded-lg bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800">
