@@ -9,6 +9,7 @@ import {RouterProvider, createRouter} from '@tanstack/react-router'
 // Import the generated route tree
 import {routeTree} from './routeTree.gen'
 import { createRoot } from "react-dom/client";
+import {LLMSettingsProvider} from "./providers/llmProvider.tsx";
 
 // Create a new router instance
 const router = createRouter({routeTree})
@@ -42,7 +43,9 @@ root.render(
         <QueryClientProvider client={queryClient}>
             <ErrorProvider>
                 <McpProvider>
-                    <RouterProvider router={router}/>
+                    <LLMSettingsProvider>
+                        <RouterProvider router={router}/>
+                    </LLMSettingsProvider>
                 </McpProvider>
             </ErrorProvider>
         </QueryClientProvider>
