@@ -11,22 +11,12 @@ export default function SettingsButton() {
             // Check if settings window already exists
 
             // Create a new settings window
-            const newWindow = new WebviewWindow('settings', {
-                url: '/settings',
-                width: 700,
-                height: 600,
-                decorations: false,
-                focus: true,
-                resizable: true,
-            });
+            const settingsWindow = await WebviewWindow.getByLabel('settings')
 
-            newWindow.once('tauri://created', function () {
-                console.log('Settings window created');
-                setupTitlebarListeners();
-            });
-            newWindow.once('tauri://error', function (e) {
-                console.error('Settings window error:', e);
-            });
+            if (settingsWindow) {
+                await settingsWindow.emit('show')
+                return
+            }
 
         } catch (error) {
             console.error('Failed to open settings window:', error);
