@@ -5,7 +5,7 @@ import ChatMessages from "../components/chat/ChatMessages.tsx";
 import ErrorPrompt from "../components/chat/ErrorPrompt.tsx";
 import ChatInputBox from "../components/chat/ChatInputBox.tsx";
 import {resizeWindowToFitContent} from "../hooks/useWindowManager.tsx";
-import {MessagesContext} from "../contexts/messagesContext.ts";
+import {MessagesContext} from "../contexts/messagesContext.tsx";
 
 export const Route = createFileRoute('/')({
     component: Index,

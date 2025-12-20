@@ -7,9 +7,10 @@ import {RouterProvider, createRouter} from '@tanstack/react-router'
 
 // Import the generated route tree
 import {routeTree} from './routeTree.gen'
-import { createRoot } from "react-dom/client";
+import {createRoot} from "react-dom/client";
 import {LLMSettingsProvider} from "./providers/llmProvider.tsx";
 import {setupTitlebarListeners} from "./lib/titleBar.ts";
+import {MessagesProvider} from "./providers/messagesProvider.tsx";
 
 // Create a new router instance
 const router = createRouter({routeTree})
@@ -34,7 +35,9 @@ root.render(
             <ErrorProvider>
                 <McpProvider>
                     <LLMSettingsProvider>
-                        <RouterProvider router={router}/>
+                        <MessagesProvider>
+                            <RouterProvider router={router}/>
+                        </MessagesProvider>
                     </LLMSettingsProvider>
                 </McpProvider>
             </ErrorProvider>

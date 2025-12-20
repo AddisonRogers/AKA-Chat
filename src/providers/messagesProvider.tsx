@@ -14,6 +14,7 @@ export const MessagesProvider: React.FC<McpProviderProps> = ({children}) => {
         messages,
         setMessages,
         addMessage: (message) => {
+            console.log("Adding message to conversation history");
             setMessages((prev) => [...prev, message]);
         },
         clearMessages: () => {

@@ -33,7 +33,7 @@ export type LLMSettingsContextType = {
 }
 export const DEFAULT_SETTINGS: LLMSettings = {
     provider: 'ollama',
-    model: '',
+    model: 'gemma3:1b-it-qat',
     temperature: '1',
     maxTokens: '1000',
     topP: '1',

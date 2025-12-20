@@ -1,13 +1,13 @@
 import React, {useCallback, useContext, useRef, useState} from "react";
 import SettingsButton from "./chatInput/SettingsButton.tsx";
 import {LLMMessage} from "../../types/LLMMessage.ts";
-import {MessagesContext} from "../../contexts/messagesContext.ts";
-import {generateText} from "ai";
+import {MessagesContext} from "../../contexts/messagesContext.tsx";
 import {ErrorContext} from "../../contexts/errorContext.tsx";
 import {McpContext} from "../../contexts/mcpContext.tsx";
 import {SpeechButton} from "./chatInput/SpeechButton.tsx";
 import {ImagePreview} from "./chatInput/ImagePreview.tsx";
 import {FilePicker} from "./chatInput/FilePicker.tsx";
+import {generateTextWrapper} from "../../lib/ai-sdk.ts";
 
 export function ChatInputBox() {
     const {addMessage} = useContext(MessagesContext);
@@ -33,7 +33,7 @@ export function ChatInputBox() {
             addMessage(userMessage);
 
             try {
-                const aiResponse = await generateText({prompt: currentInput});
+                const aiResponse = await generateTextWrapper({prompt: currentInput, handleError: addError, mcpEndpoint: mcpEndpoint});
                 if (!aiResponse) {
                     throw new Error("AI response is undefined or null");
                 }

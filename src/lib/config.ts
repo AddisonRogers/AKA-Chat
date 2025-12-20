@@ -1,7 +1,6 @@
-
 import { readTextFile, writeTextFile } from '@tauri-apps/plugin-fs';
 import { appConfigDir } from '@tauri-apps/api/path';
-import { LLMSettings } from '../types/LLMSettingsTypes.ts';
+import {DEFAULT_SETTINGS, LLMSettings} from '../types/LLMSettingsTypes.ts';
 
 const CONFIG_FILE_NAME = 'llm-settings.json';
 
@@ -24,7 +23,8 @@ export async function loadSettings(): Promise<LLMSettings | null> {
         return JSON.parse(content) as LLMSettings;
     } catch (error) {
         console.warn('Failed to load settings from config file:', error);
-        return null;
+        console.log('Using default settings.');
+        return DEFAULT_SETTINGS
     }
 }
 
