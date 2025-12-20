@@ -101,7 +101,7 @@ export function ChatInputBox() {
     return (
         <>
             <div
-                className={"flex items-center mt-1.5 border rounded-xl p-1.5 gap-2"}
+                className={"flex items-center mt-1.5 p-1.5 gap-2 border-b-gray-50 border-double border-b"}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
             >

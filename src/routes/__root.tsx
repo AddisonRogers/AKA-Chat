@@ -1,10 +1,10 @@
 import {createRootRoute, Outlet} from '@tanstack/react-router'
-import {TanStackRouterDevtools} from '@tanstack/react-router-devtools'
+import {TitleBar} from "../components/Titlebar.tsx";
 
 const RootLayout = () => (
     <>
+        <TitleBar />
         <Outlet/>
-        <TanStackRouterDevtools/>
     </>
 )
 

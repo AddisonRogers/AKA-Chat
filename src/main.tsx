@@ -9,7 +9,6 @@ import {RouterProvider, createRouter} from '@tanstack/react-router'
 import {routeTree} from './routeTree.gen'
 import {createRoot} from "react-dom/client";
 import {LLMSettingsProvider} from "./providers/llmProvider.tsx";
-import {setupTitlebarListeners} from "./lib/titleBar.ts";
 import {MessagesProvider} from "./providers/messagesProvider.tsx";
 
 // Create a new router instance
@@ -23,8 +22,6 @@ declare module '@tanstack/react-router' {
 }
 
 const queryClient = new QueryClient()
-
-setupTitlebarListeners();
 
 const rootElement = document.getElementById('root')!
 const root = createRoot(rootElement)

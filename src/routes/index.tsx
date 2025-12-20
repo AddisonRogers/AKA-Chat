@@ -23,20 +23,18 @@ function Index() {
     }, [messages]);
 
     return (
-        <div className={"h-screen w-screen"}>
-            <div className={"flex flex-col h-screen justify-between p-5"}>
-                <ChatInputBox/>
-                <div className="flex flex-col-reverse items-center gap-2">
-                    {errors.map((error, index) => (
-                        <ErrorPrompt key={index} index={index} message={error}/>
-                    ))}
-                </div>
-                {messages.length > 0 && (
-                    <div className={"flex-1 overflow-y-auto"}>
-                        <ChatMessages messages={messages}/>
-                    </div>
-                )}
+        <div className={"flex flex-col w-screen h-screen justify-between px-2"}>
+            <ChatInputBox/>
+            <div className="flex flex-col-reverse items-center gap-2">
+                {errors.map((error, index) => (
+                    <ErrorPrompt key={index} index={index} message={error}/>
+                ))}
             </div>
+            {messages.length > 0 && (
+                <div className={"flex-1 overflow-y-auto"}>
+                    <ChatMessages messages={messages}/>
+                </div>
+            )}
         </div>
     );
 }
