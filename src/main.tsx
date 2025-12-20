@@ -3,7 +3,6 @@ import "./index.css";
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {ErrorProvider} from "./providers/errorProvider.tsx";
 import {McpProvider} from "./providers/mcpProvider.tsx";
-import {getCurrentWindow} from "@tauri-apps/api/window";
 import {RouterProvider, createRouter} from '@tanstack/react-router'
 
 // Import the generated route tree
