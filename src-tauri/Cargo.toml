@@ -25,6 +25,8 @@ serde_json = "1"
 tauri-plugin-fs = "2"
 tauri-plugin-global-shortcut = "2.3.1"
 tauri-plugin-window-state = "2.4.1"
+error = "0.1.9"
+log = "0.4.29"
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
 tauri-plugin-global-shortcut = "2"

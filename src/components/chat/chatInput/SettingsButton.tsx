@@ -1,30 +1,22 @@
 import {Button} from "../../ui/button.tsx";
 import {Settings} from "lucide-react";
 import {useCallback} from "react";
-import {WebviewWindow} from "@tauri-apps/api/webviewWindow";
-import {setupTitlebarListeners} from "../../../lib/titleBar.ts";
+import {invoke} from '@tauri-apps/api/core';
 
 export default function SettingsButton() {
 
-    const openSettingsWindow = useCallback(async () => {
-        try {
-            // Check if settings window already exists
+  const openSettingsWindow = useCallback(async () => {
+    try {
 
-            // Create a new settings window
-            const settingsWindow = await WebviewWindow.getByLabel('settings')
+      invoke('open_settings')
 
-            if (settingsWindow) {
-                await settingsWindow.emit('show')
-                return
-            }
-
-        } catch (error) {
-            console.error('Failed to open settings window:', error);
-        }
-    }, []);
+    } catch (error) {
+      console.error('Failed to open settings window:', error);
+    }
+  }, []);
 
 
-    return <Button variant="ghost" size="icon" onClick={openSettingsWindow} title="Settings">
-        <Settings className="w-5 h-5"/>
-    </Button>;
+  return <Button variant="ghost" size="icon" onClick={openSettingsWindow} title="Settings">
+    <Settings className="w-5 h-5"/>
+  </Button>;
 }
